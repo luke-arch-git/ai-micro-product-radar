@@ -1,0 +1,12 @@
+{
+  "name": "ai-micro-product-radar",
+  "version": "0.1.0",
+  "description": "A lightweight radar for AI micro product opportunities backed by real user pain signals.",
+  "scripts": {
+    "validate": "node scripts/validate-data.js"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}

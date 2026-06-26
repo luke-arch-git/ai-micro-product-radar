@@ -1,0 +1,1457 @@
+window.RADAR_CATEGORIES = [
+  {
+    "id": "social-comments",
+    "name": "评论区需求",
+    "description": "从小红书、抖音、直播、社区评论中提取抱怨、求助、购买顾虑和产品机会。"
+  },
+  {
+    "id": "chat-workflow",
+    "name": "聊天工作流",
+    "description": "把微信、私信、客服聊天、语音留言转成回复、待办、线索和话术。"
+  },
+  {
+    "id": "photo-to-output",
+    "name": "照片到结果",
+    "description": "从现场照片、商品图、票据、菜单、截图生成清单、报价、文案或判断。"
+  },
+  {
+    "id": "content-repurpose",
+    "name": "内容再加工",
+    "description": "把视频字幕、笔记、评论、直播内容变成标题、切片、选题、卖点和脚本。"
+  },
+  {
+    "id": "document-cleanup",
+    "name": "文档整理",
+    "description": "把 PDF、表格、截图、合同、简历、作业等转成结构化内容或校验结果。"
+  },
+  {
+    "id": "tiny-ops",
+    "name": "小生意运营",
+    "description": "围绕报价、记账、差评、预约、跟进、复盘等高频小任务做小产品。"
+  }
+];
+
+window.OPPORTUNITIES = [
+  {
+    "id": "mp-001",
+    "title": "小红书评论区需求提取器",
+    "status": "seed-hypothesis",
+    "category": "social-comments",
+    "target_user": "做账号、卖课、卖货、做探店的人",
+    "signal_sources": [
+      "小红书评论区",
+      "抖音评论区"
+    ],
+    "trigger_phrases": [
+      "有没有工具能整理评论",
+      "同问",
+      "蹲一个总结",
+      "求清单"
+    ],
+    "user_scene": "账号运营者发完内容后，评论区里堆着大量问题和购买顾虑，但人工翻评论很慢。",
+    "input": "评论区文本或截图 OCR 后的评论",
+    "output": "高频问题、用户顾虑、潜在产品需求、可回复话术",
+    "current_workaround": "手动翻评论、截图、复制到表格、凭感觉总结。",
+    "ai_product": "粘贴评论后自动生成需求洞察报告。",
+    "mvp_scope": "粘贴 100 条评论，输出需求 Top 10 和 10 条私信回复。",
+    "charge_model": "19-99 元/月，或按单次报告收费。",
+    "why_now": "短视频和种草内容每天产生大量评论，AI 文本聚类和总结成本足够低。",
+    "scores": {
+      "pain": 4,
+      "frequency": 5,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 4,
+      "distribution": 5
+    },
+    "tags": [
+      "comments",
+      "xiaohongshu",
+      "douyin",
+      "content"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 93
+  },
+  {
+    "id": "mp-015",
+    "title": "直播评论高频问题整理器",
+    "status": "seed-hypothesis",
+    "category": "social-comments",
+    "target_user": "直播间运营、带货主播、助播、课程直播团队",
+    "signal_sources": [
+      "抖音直播",
+      "视频号直播",
+      "小红书直播"
+    ],
+    "trigger_phrases": [
+      "刚才问什么最多",
+      "评论刷太快",
+      "问题看不过来",
+      "下播复盘"
+    ],
+    "user_scene": "直播评论滚动很快，团队下播后难以知道用户最关心价格、效果、规格还是售后。",
+    "input": "直播评论导出、截图 OCR、助播记录",
+    "output": "高频问题、购买顾虑、话术漏洞、下场直播优化点",
+    "current_workaround": "助播边看边记，直播后凭印象复盘。",
+    "ai_product": "导入直播评论后自动生成复盘。",
+    "mvp_scope": "粘贴评论文本，输出问题分类和话术建议。",
+    "charge_model": "99-399 元/月。",
+    "why_now": "直播带货和知识直播都需要快反馈，评论总结是刚需但工具很轻。",
+    "scores": {
+      "pain": 5,
+      "frequency": 5,
+      "ai_fit": 5,
+      "mvp_speed": 4,
+      "payment": 5,
+      "distribution": 4
+    },
+    "tags": [
+      "live",
+      "comments",
+      "douyin",
+      "sales"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 93
+  },
+  {
+    "id": "mp-020",
+    "title": "客户会议录音转报价跟进清单",
+    "status": "seed-hypothesis",
+    "category": "chat-workflow",
+    "target_user": "自由职业者、设计师、咨询顾问、小 B 销售",
+    "signal_sources": [
+      "飞书会议",
+      "微信语音",
+      "小红书自由职业"
+    ],
+    "trigger_phrases": [
+      "客户需求太散",
+      "报价漏项",
+      "会议纪要",
+      "怎么跟进"
+    ],
+    "user_scene": "自由职业者和客户聊完后，需求、报价范围、下一步动作都散在录音里。",
+    "input": "会议录音转写或聊天记录",
+    "output": "需求清单、报价项、风险点、跟进话术",
+    "current_workaround": "边聊边记，结束后翻录音和聊天补整理。",
+    "ai_product": "会议转写后自动生成报价前置材料。",
+    "mvp_scope": "粘贴转写文本，输出报价清单和 5 条待确认问题。",
+    "charge_model": "49-199 元/月。",
+    "why_now": "转写和信息抽取成熟，自由职业者最怕漏需求和漏报价。",
+    "scores": {
+      "pain": 5,
+      "frequency": 4,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 5,
+      "distribution": 4
+    },
+    "tags": [
+      "meeting",
+      "quotation",
+      "freelancer",
+      "sales"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 93
+  },
+  {
+    "id": "mp-025",
+    "title": "一篇长内容拆成多平台文案",
+    "status": "seed-hypothesis",
+    "category": "content-repurpose",
+    "target_user": "个人 IP、咨询顾问、机构运营、知识博主",
+    "signal_sources": [
+      "公众号",
+      "小红书",
+      "视频号",
+      "朋友圈"
+    ],
+    "trigger_phrases": [
+      "多平台分发",
+      "一文多发",
+      "改成小红书",
+      "朋友圈怎么写"
+    ],
+    "user_scene": "创作者写完长文后，还要改成朋友圈、小红书、短视频口播、社群预告。",
+    "input": "长文章、课程大纲、直播稿",
+    "output": "小红书笔记、朋友圈、视频脚本、社群文案",
+    "current_workaround": "人工改写多遍，或者复制到多个 AI 对话里。",
+    "ai_product": "一次输入生成多平台文案包。",
+    "mvp_scope": "粘贴长文，输出 4 个平台版本和标题。",
+    "charge_model": "49-199 元/月。",
+    "why_now": "分发渠道变多，用户需要平台语气转换而不是单纯改写。",
+    "scores": {
+      "pain": 4,
+      "frequency": 5,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 4,
+      "distribution": 5
+    },
+    "tags": [
+      "content",
+      "repurpose",
+      "xiaohongshu",
+      "wechat"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 93
+  },
+  {
+    "id": "mp-026",
+    "title": "聊天记录提炼客服知识库",
+    "status": "seed-hypothesis",
+    "category": "chat-workflow",
+    "target_user": "小电商客服、课程助教、本地服务商家",
+    "signal_sources": [
+      "微信客服",
+      "淘宝客服",
+      "社群答疑"
+    ],
+    "trigger_phrases": [
+      "每天都问一样的问题",
+      "新人客服不会回",
+      "FAQ",
+      "话术库"
+    ],
+    "user_scene": "客户每天问重复问题，但商家没有时间整理 FAQ 和标准回复。",
+    "input": "历史聊天记录、客服问答、群答疑",
+    "output": "FAQ、标准回复、禁用话术、新人培训卡",
+    "current_workaround": "把常用回复存在微信收藏，靠老员工口口相传。",
+    "ai_product": "导入聊天记录自动生成客服知识库。",
+    "mvp_scope": "粘贴 200 条问答，输出 30 条 FAQ 和标准回复。",
+    "charge_model": "99-399 元/月。",
+    "why_now": "AI 能从非结构化聊天里提取重复问答，小团队客服知识管理薄弱。",
+    "scores": {
+      "pain": 5,
+      "frequency": 5,
+      "ai_fit": 5,
+      "mvp_speed": 4,
+      "payment": 5,
+      "distribution": 4
+    },
+    "tags": [
+      "customer-service",
+      "faq",
+      "wechat",
+      "ecommerce"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 93
+  },
+  {
+    "id": "mp-005",
+    "title": "差评补救回复生成器",
+    "status": "seed-hypothesis",
+    "category": "tiny-ops",
+    "target_user": "本地商家、电商卖家、外卖店、服务门店",
+    "signal_sources": [
+      "大众点评",
+      "美团",
+      "淘宝评价",
+      "小红书吐槽"
+    ],
+    "trigger_phrases": [
+      "差评怎么回",
+      "客户投诉",
+      "怎么补救",
+      "求回复模板"
+    ],
+    "user_scene": "店主看到差评后需要回复、解释、道歉、补救，但自己写容易情绪化或太模板。",
+    "input": "差评内容、订单情况、店主想表达的态度",
+    "output": "平台回复、私信补救话术、内部改进清单",
+    "current_workaround": "套用模板，临时让朋友改，或不回复。",
+    "ai_product": "根据差评生成不同语气的补救方案。",
+    "mvp_scope": "粘贴差评，选择行业，返回 3 版回复和补救动作。",
+    "charge_model": "29-99 元/月，或差评处理包。",
+    "why_now": "评分直接影响转化，AI 能低成本生成更像真人的回复。",
+    "scores": {
+      "pain": 5,
+      "frequency": 4,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 4,
+      "distribution": 4
+    },
+    "tags": [
+      "reviews",
+      "local-business",
+      "ecommerce",
+      "reply"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 90
+  },
+  {
+    "id": "mp-006",
+    "title": "票据照片自动记账助手",
+    "status": "seed-hypothesis",
+    "category": "photo-to-output",
+    "target_user": "个体户、自由职业者、小团队老板",
+    "signal_sources": [
+      "小红书个体户经验",
+      "微信群",
+      "抖音创业号评论"
+    ],
+    "trigger_phrases": [
+      "票据太多",
+      "不会记账",
+      "月底才想起来",
+      "求简单表格"
+    ],
+    "user_scene": "小老板每天有收款截图、发票、进货单、转账截图，但很少及时整理。",
+    "input": "票据、收款截图、转账截图、手写小票照片",
+    "output": "收入、支出、分类、月度利润表",
+    "current_workaround": "月底翻相册和微信记录，手动记到表格。",
+    "ai_product": "拍照上传后自动归类成流水账。",
+    "mvp_scope": "上传图片，提取金额、日期、类别，导出 CSV。",
+    "charge_model": "39-199 元/月。",
+    "why_now": "OCR 和多模态识别足够成熟，小生意老板需要的是极简而不是完整财务软件。",
+    "scores": {
+      "pain": 5,
+      "frequency": 5,
+      "ai_fit": 4,
+      "mvp_speed": 4,
+      "payment": 5,
+      "distribution": 4
+    },
+    "tags": [
+      "receipt",
+      "accounting",
+      "small-business",
+      "photo"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 90
+  },
+  {
+    "id": "mp-008",
+    "title": "商品评论差评原因聚类器",
+    "status": "seed-hypothesis",
+    "category": "social-comments",
+    "target_user": "电商卖家、选品团队、小品牌主理人",
+    "signal_sources": [
+      "淘宝评价",
+      "京东评价",
+      "拼多多评价",
+      "小红书测评"
+    ],
+    "trigger_phrases": [
+      "差评原因",
+      "买家吐槽",
+      "不知道哪里要改",
+      "退货原因"
+    ],
+    "user_scene": "卖家有大量商品评论，但不知道主要问题是质量、尺码、包装、物流还是预期不符。",
+    "input": "商品评论 CSV、复制文本或评论截图",
+    "output": "差评原因分类、占比、典型原话、改进建议",
+    "current_workaround": "人工抽样看评论，客服凭经验反馈。",
+    "ai_product": "导入评论后输出产品改进报告。",
+    "mvp_scope": "导入 500 条评论，输出 8 类问题和 Top 原因。",
+    "charge_model": "99-499 元/月，或按 SKU 收费。",
+    "why_now": "电商竞争加剧，评论数据多但小卖家没有数据分析工具。",
+    "scores": {
+      "pain": 5,
+      "frequency": 4,
+      "ai_fit": 5,
+      "mvp_speed": 4,
+      "payment": 5,
+      "distribution": 4
+    },
+    "tags": [
+      "ecommerce",
+      "reviews",
+      "analysis",
+      "product"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 90
+  },
+  {
+    "id": "mp-016",
+    "title": "家长群通知转待办提醒",
+    "status": "seed-hypothesis",
+    "category": "chat-workflow",
+    "target_user": "家长、班主任、托管老师",
+    "signal_sources": [
+      "微信群",
+      "小红书家长经验",
+      "抖音评论"
+    ],
+    "trigger_phrases": [
+      "家长群消息太多",
+      "又忘记交材料",
+      "通知看漏了",
+      "求提醒"
+    ],
+    "user_scene": "家长群和班级群每天有作业、缴费、活动、材料提交，消息多且容易漏。",
+    "input": "群通知截图或复制出来的群消息",
+    "output": "待办事项、截止时间、所需材料、提醒文案",
+    "current_workaround": "手动翻聊天记录，自己记备忘录，临时问其他家长。",
+    "ai_product": "上传群通知后自动生成家庭待办清单。",
+    "mvp_scope": "粘贴 20 条群消息，输出本周待办和提醒时间。",
+    "charge_model": "9.9 元/月，或家长工具包。",
+    "why_now": "群消息是半结构化文本，AI 能稳定抽取时间、事项和材料。",
+    "scores": {
+      "pain": 4,
+      "frequency": 5,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 3,
+      "distribution": 5
+    },
+    "tags": [
+      "wechat",
+      "parents",
+      "todo",
+      "education"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 90
+  },
+  {
+    "id": "mp-022",
+    "title": "商品图转平台标题卖点",
+    "status": "seed-hypothesis",
+    "category": "photo-to-output",
+    "target_user": "闲鱼卖家、电商小卖家、微商、二手商家",
+    "signal_sources": [
+      "闲鱼",
+      "小红书卖货经验",
+      "抖音电商"
+    ],
+    "trigger_phrases": [
+      "标题怎么写",
+      "卖点不会写",
+      "商品图",
+      "没人点"
+    ],
+    "user_scene": "卖家有商品图，但不会写适合平台搜索和点击的标题、卖点、详情。",
+    "input": "商品照片、价格、成色或规格",
+    "output": "标题、卖点、详情、标签、议价回复",
+    "current_workaround": "抄同行标题，或者随便写几句。",
+    "ai_product": "上传商品图后生成发布文案。",
+    "mvp_scope": "上传 3 张商品图，输出 5 个标题和详情页文案。",
+    "charge_model": "19-99 元/月，或发布助手插件。",
+    "why_now": "多模态识图和电商文案生成已经能覆盖大部分基础发布工作。",
+    "scores": {
+      "pain": 4,
+      "frequency": 4,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 4,
+      "distribution": 5
+    },
+    "tags": [
+      "ecommerce",
+      "photo",
+      "copywriting",
+      "listing"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 90
+  },
+  {
+    "id": "mp-002",
+    "title": "微信聊天截图礼貌回复助手",
+    "status": "seed-hypothesis",
+    "category": "chat-workflow",
+    "target_user": "销售、客服、个体户、自由职业者",
+    "signal_sources": [
+      "微信群",
+      "小红书笔记",
+      "抖音评论"
+    ],
+    "trigger_phrases": [
+      "不知道怎么回",
+      "怎么拒绝不尴尬",
+      "求话术",
+      "客户这样说怎么办"
+    ],
+    "user_scene": "用户遇到催款、砍价、拒绝、投诉、邀约等微妙对话，不知道怎么回更合适。",
+    "input": "聊天截图或复制出来的聊天记录",
+    "output": "3 种语气的回复：温和、坚定、促成成交",
+    "current_workaround": "问朋友、搜话术、自己反复改。",
+    "ai_product": "上传截图后生成可直接复制的回复。",
+    "mvp_scope": "截图 OCR + 场景判断 + 生成 3 条回复。",
+    "charge_model": "9.9 元单次包，或 29 元/月。",
+    "why_now": "AI 已能理解聊天上下文，普通人对低摩擦回复工具接受度高。",
+    "scores": {
+      "pain": 4,
+      "frequency": 4,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 3,
+      "distribution": 5
+    },
+    "tags": [
+      "wechat",
+      "reply",
+      "sales",
+      "service"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 87
+  },
+  {
+    "id": "mp-003",
+    "title": "现场照片报价单生成器",
+    "status": "seed-hypothesis",
+    "category": "photo-to-output",
+    "target_user": "维修师傅、家政、装修小队、上门服务商家",
+    "signal_sources": [
+      "抖音本地生活",
+      "小红书本地服务",
+      "微信群"
+    ],
+    "trigger_phrases": [
+      "报价怎么写",
+      "材料清单",
+      "客户嫌贵怎么回",
+      "现场照片"
+    ],
+    "user_scene": "师傅到现场后要根据照片和描述给客户发报价，常常写得慢、漏项或不专业。",
+    "input": "现场照片、客户需求语音或文字",
+    "output": "报价单、材料清单、风险说明、微信回复话术",
+    "current_workaround": "靠经验手写，复制旧报价，或者只发一句大概多少钱。",
+    "ai_product": "照片和语音生成结构化报价。",
+    "mvp_scope": "用户上传 3 张图和一句描述，返回可复制报价文本。",
+    "charge_model": "99-299 元/月，或按行业模板收费。",
+    "why_now": "多模态模型能读图和整理文本，小服务商缺少轻量报价系统。",
+    "scores": {
+      "pain": 5,
+      "frequency": 4,
+      "ai_fit": 4,
+      "mvp_speed": 4,
+      "payment": 5,
+      "distribution": 4
+    },
+    "tags": [
+      "photo",
+      "quotation",
+      "local-service",
+      "wechat"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 87
+  },
+  {
+    "id": "mp-004",
+    "title": "短视频字幕切片标题生成器",
+    "status": "seed-hypothesis",
+    "category": "content-repurpose",
+    "target_user": "讲课博主、播客剪辑、知识付费团队、代运营",
+    "signal_sources": [
+      "抖音",
+      "小红书",
+      "B站评论区"
+    ],
+    "trigger_phrases": [
+      "这段适合做切片",
+      "标题怎么起",
+      "求爆款标题",
+      "剪辑太慢"
+    ],
+    "user_scene": "长视频或直播回放里有很多可切片内容，但人工找亮点和写标题很耗时。",
+    "input": "视频字幕或转写文本",
+    "output": "切片时间点建议、标题、封面文案、简介",
+    "current_workaround": "人工看回放，凭经验截段落，反复改标题。",
+    "ai_product": "上传字幕后自动标记可切片片段。",
+    "mvp_scope": "粘贴 30 分钟字幕，输出 10 个切片候选。",
+    "charge_model": "49-199 元/月，或按分钟数收费。",
+    "why_now": "视频号、抖音、小红书都需要持续分发，字幕理解和标题生成已经足够可用。",
+    "scores": {
+      "pain": 4,
+      "frequency": 5,
+      "ai_fit": 5,
+      "mvp_speed": 4,
+      "payment": 4,
+      "distribution": 4
+    },
+    "tags": [
+      "video",
+      "subtitle",
+      "creator",
+      "repurpose"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 87
+  },
+  {
+    "id": "mp-012",
+    "title": "老板语音转任务清单",
+    "status": "seed-hypothesis",
+    "category": "chat-workflow",
+    "target_user": "小团队老板、店长、助理、运营负责人",
+    "signal_sources": [
+      "微信群",
+      "飞书/钉钉协作经验",
+      "小红书职场"
+    ],
+    "trigger_phrases": [
+      "老板语音太长",
+      "听不完",
+      "漏任务",
+      "求总结"
+    ],
+    "user_scene": "老板或客户发长语音安排事情，接收者要反复听才能拆成任务。",
+    "input": "微信语音转文字、会议语音、聊天记录",
+    "output": "任务清单、负责人、截止时间、待确认问题",
+    "current_workaround": "手动听语音，自己写待办。",
+    "ai_product": "语音或转写文本生成可执行任务清单。",
+    "mvp_scope": "粘贴转写文本，输出待办和追问。",
+    "charge_model": "19-99 元/月。",
+    "why_now": "语音转写和任务抽取成熟，小团队协作还停留在聊天里。",
+    "scores": {
+      "pain": 4,
+      "frequency": 5,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 3,
+      "distribution": 4
+    },
+    "tags": [
+      "voice",
+      "todo",
+      "wechat",
+      "ops"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 87
+  },
+  {
+    "id": "mp-024",
+    "title": "小团队表格异常检查器",
+    "status": "seed-hypothesis",
+    "category": "document-cleanup",
+    "target_user": "行政、财务助理、运营、社群团长",
+    "signal_sources": [
+      "Excel 表格",
+      "微信群",
+      "小红书办公"
+    ],
+    "trigger_phrases": [
+      "表格对不上",
+      "哪里漏了",
+      "重复数据",
+      "求公式"
+    ],
+    "user_scene": "小团队经常有报名表、收款表、库存表和排班表，错漏重复靠人工找。",
+    "input": "Excel、CSV、表格截图",
+    "output": "重复项、缺失项、异常金额、修复建议",
+    "current_workaround": "用筛选和公式慢慢查，或者让同事再看一遍。",
+    "ai_product": "上传表格后自动生成异常报告。",
+    "mvp_scope": "导入 CSV，输出 10 类常见错误和高亮行号。",
+    "charge_model": "39-199 元/月。",
+    "why_now": "结构化数据和自然语言解释结合，适合非专业表格用户。",
+    "scores": {
+      "pain": 5,
+      "frequency": 4,
+      "ai_fit": 4,
+      "mvp_speed": 4,
+      "payment": 5,
+      "distribution": 4
+    },
+    "tags": [
+      "spreadsheet",
+      "ops",
+      "finance",
+      "quality-check"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 87
+  },
+  {
+    "id": "mp-013",
+    "title": "简历截图生成面试问题",
+    "status": "seed-hypothesis",
+    "category": "document-cleanup",
+    "target_user": "小公司老板、部门主管、兼职招聘者",
+    "signal_sources": [
+      "招聘群",
+      "小红书 HR 经验",
+      "Boss直聘聊天"
+    ],
+    "trigger_phrases": [
+      "不会面试",
+      "简历怎么看",
+      "问什么问题",
+      "怕招错人"
+    ],
+    "user_scene": "小公司没有专业 HR，主管看到简历后不知道该追问哪些经历和风险点。",
+    "input": "简历截图或 PDF",
+    "output": "面试问题、风险点、候选人亮点、追问顺序",
+    "current_workaround": "凭感觉聊，套用网上面试题。",
+    "ai_product": "上传简历后生成岗位相关面试提纲。",
+    "mvp_scope": "简历 + 岗位名称，输出 12 个问题和 5 个风险点。",
+    "charge_model": "9.9 元单次，或招聘工具包。",
+    "why_now": "AI 能快速阅读简历，小公司招聘错误成本高但没有专业流程。",
+    "scores": {
+      "pain": 4,
+      "frequency": 3,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 4,
+      "distribution": 4
+    },
+    "tags": [
+      "resume",
+      "hiring",
+      "interview",
+      "screenshot"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 83
+  },
+  {
+    "id": "mp-027",
+    "title": "美甲款式图转套餐命名和价目卡",
+    "status": "seed-hypothesis",
+    "category": "photo-to-output",
+    "target_user": "美甲美睫店、皮肤管理门店、个人手艺人",
+    "signal_sources": [
+      "小红书美甲",
+      "抖音团购",
+      "门店朋友圈"
+    ],
+    "trigger_phrases": [
+      "款式怎么命名",
+      "套餐怎么写",
+      "价目表",
+      "朋友圈文案"
+    ],
+    "user_scene": "美业店有大量款式图，但套餐命名、卖点、价目卡和朋友圈文案都要手写。",
+    "input": "款式照片、成本、服务时长、价格区间",
+    "output": "套餐名称、卖点、价目卡文案、朋友圈文案",
+    "current_workaround": "抄同行命名，手动改图文。",
+    "ai_product": "上传款式图后生成可发团购和朋友圈的套餐卡。",
+    "mvp_scope": "上传 5 张图和价格，输出 10 个套餐名和文案。",
+    "charge_model": "49-199 元/月。",
+    "why_now": "本地生活门店内容更新频率高，AI 图文理解适合做轻量营销辅助。",
+    "scores": {
+      "pain": 4,
+      "frequency": 4,
+      "ai_fit": 4,
+      "mvp_speed": 4,
+      "payment": 4,
+      "distribution": 5
+    },
+    "tags": [
+      "beauty",
+      "photo",
+      "pricing",
+      "local-business"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 83
+  },
+  {
+    "id": "mp-028",
+    "title": "资料包目录自动整理器",
+    "status": "seed-hypothesis",
+    "category": "document-cleanup",
+    "target_user": "卖资料包的人、课程助教、学习社群运营",
+    "signal_sources": [
+      "网盘资料",
+      "微信群",
+      "小红书学习资料"
+    ],
+    "trigger_phrases": [
+      "资料太乱",
+      "不知道先看哪个",
+      "求目录",
+      "网盘整理"
+    ],
+    "user_scene": "课程资料、考证资料、模板资料放在网盘里，用户打开后不知道每个文件是什么。",
+    "input": "文件名列表、网盘目录截图、资料说明",
+    "output": "目录说明、学习顺序、文件用途、缺失提醒",
+    "current_workaround": "手动写说明文档，或者让用户自己翻。",
+    "ai_product": "导入文件名后自动生成资料包说明书。",
+    "mvp_scope": "粘贴文件列表，输出分组目录和使用顺序。",
+    "charge_model": "29-99 元单次，或课程运营工具。",
+    "why_now": "AI 对文件名和目录语义理解足够好，资料卖家需要提升交付体验。",
+    "scores": {
+      "pain": 4,
+      "frequency": 3,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 4,
+      "distribution": 4
+    },
+    "tags": [
+      "files",
+      "course",
+      "directory",
+      "knowledge"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 83
+  },
+  {
+    "id": "mp-030",
+    "title": "报名表和接龙名单清洗器",
+    "status": "seed-hypothesis",
+    "category": "document-cleanup",
+    "target_user": "社群团长、活动组织者、课程助教、门店运营",
+    "signal_sources": [
+      "微信群接龙",
+      "问卷星",
+      "Excel 表格",
+      "小红书社群运营"
+    ],
+    "trigger_phrases": [
+      "名单重复",
+      "漏填手机号",
+      "接龙太乱",
+      "报名表整理"
+    ],
+    "user_scene": "活动报名、团购接龙、课程名单经常有重复、错别字、漏填、格式不统一。",
+    "input": "报名表、接龙截图、Excel、CSV",
+    "output": "去重名单、缺失项、分组结果、提醒补填话术",
+    "current_workaround": "人工复制粘贴、筛选、查重、私聊补信息。",
+    "ai_product": "导入名单后自动清洗并生成补填提醒。",
+    "mvp_scope": "上传 CSV，输出清洗表和缺失信息列表。",
+    "charge_model": "29-99 元/月，或按活动收费。",
+    "why_now": "小组织者不想学复杂表格公式，AI 可以把异常解释成人话。",
+    "scores": {
+      "pain": 4,
+      "frequency": 4,
+      "ai_fit": 4,
+      "mvp_speed": 5,
+      "payment": 4,
+      "distribution": 4
+    },
+    "tags": [
+      "form",
+      "spreadsheet",
+      "community",
+      "cleanup"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 83
+  },
+  {
+    "id": "mp-007",
+    "title": "招聘 JD 转小红书招聘帖",
+    "status": "seed-hypothesis",
+    "category": "content-repurpose",
+    "target_user": "小公司 HR、门店老板、兼职招聘者",
+    "signal_sources": [
+      "小红书招聘帖",
+      "Boss直聘经验帖",
+      "微信群招聘"
+    ],
+    "trigger_phrases": [
+      "招聘帖怎么写",
+      "没人投简历",
+      "求文案",
+      "JD 太官方"
+    ],
+    "user_scene": "小公司有招聘需求，但写出来的 JD 太硬，发到小红书或朋友圈没人看。",
+    "input": "岗位 JD、薪资范围、公司特点、城市",
+    "output": "小红书标题、正文、福利卖点、评论区回复",
+    "current_workaround": "复制 Boss 直聘 JD，或者照搬同行帖子。",
+    "ai_product": "把正式 JD 改成社交平台招聘帖。",
+    "mvp_scope": "粘贴 JD，生成 5 个标题和 3 版正文。",
+    "charge_model": "19 元单次，或招聘季套餐。",
+    "why_now": "招聘渠道内容化，小公司不会做平台语气转换。",
+    "scores": {
+      "pain": 3,
+      "frequency": 3,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 4,
+      "distribution": 4
+    },
+    "tags": [
+      "recruiting",
+      "xiaohongshu",
+      "copywriting",
+      "hr"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 80
+  },
+  {
+    "id": "mp-019",
+    "title": "健身打卡照片复盘助手",
+    "status": "seed-hypothesis",
+    "category": "photo-to-output",
+    "target_user": "健身新手、私教、减脂打卡社群",
+    "signal_sources": [
+      "小红书健身",
+      "抖音健身评论",
+      "社群打卡"
+    ],
+    "trigger_phrases": [
+      "帮我看看吃得对不对",
+      "打卡没人反馈",
+      "减脂餐",
+      "训练记录"
+    ],
+    "user_scene": "用户每天发饮食和训练打卡，但教练或群主没时间逐条反馈。",
+    "input": "饮食照片、训练记录、体重变化",
+    "output": "打卡复盘、下次调整建议、鼓励话术",
+    "current_workaround": "群里发图等人点评，或者自己估算热量。",
+    "ai_product": "上传打卡内容后生成轻量复盘。",
+    "mvp_scope": "每日 3 张饮食图 + 训练文字，返回一段复盘。",
+    "charge_model": "29-99 元/月，或私教辅助工具。",
+    "why_now": "AI 能把图片和文字整理成反馈，适合先做辅助复盘而不是医疗建议。",
+    "scores": {
+      "pain": 3,
+      "frequency": 5,
+      "ai_fit": 4,
+      "mvp_speed": 4,
+      "payment": 3,
+      "distribution": 5
+    },
+    "tags": [
+      "fitness",
+      "photo",
+      "review",
+      "community"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 80
+  },
+  {
+    "id": "mp-021",
+    "title": "收藏长文转行动清单",
+    "status": "seed-hypothesis",
+    "category": "document-cleanup",
+    "target_user": "学习者、运营、自由职业者、创业者",
+    "signal_sources": [
+      "小红书收藏",
+      "公众号文章",
+      "知识星球"
+    ],
+    "trigger_phrases": [
+      "收藏等于学会",
+      "太长不想看",
+      "求总结",
+      "第一步怎么做"
+    ],
+    "user_scene": "用户收藏大量教程和经验帖，但真正需要的是可执行步骤和模板。",
+    "input": "文章链接、正文、截图 OCR",
+    "output": "行动清单、模板字段、第一步任务、风险提醒",
+    "current_workaround": "收藏夹堆积，偶尔复制到 AI 里总结。",
+    "ai_product": "把长文变成一页可执行计划。",
+    "mvp_scope": "粘贴文章，生成 7 步行动清单和当天第一步。",
+    "charge_model": "19-59 元/月，或知识管理插件。",
+    "why_now": "信息过载后，用户价值从摘要转向行动化。",
+    "scores": {
+      "pain": 3,
+      "frequency": 4,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 3,
+      "distribution": 4
+    },
+    "tags": [
+      "article",
+      "summary",
+      "todo",
+      "knowledge"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 80
+  },
+  {
+    "id": "mp-009",
+    "title": "房源截图看房清单生成器",
+    "status": "seed-hypothesis",
+    "category": "document-cleanup",
+    "target_user": "租房者、买房者、房产中介新人",
+    "signal_sources": [
+      "小红书租房攻略",
+      "抖音房产评论",
+      "微信群"
+    ],
+    "trigger_phrases": [
+      "这个房子能买吗",
+      "看房注意什么",
+      "怎么问中介",
+      "避坑清单"
+    ],
+    "user_scene": "用户看到房源截图后，不知道要问哪些关键问题，也不知道图里可能有哪些风险点。",
+    "input": "房源截图、户型图、价格和位置描述",
+    "output": "看房问题清单、风险提示、给中介的话术",
+    "current_workaround": "翻攻略、问朋友、临场随便问。",
+    "ai_product": "上传房源截图后生成看房清单。",
+    "mvp_scope": "截图 + 城市 + 预算，输出 20 个必问问题。",
+    "charge_model": "9.9 元单次，或租房季套餐。",
+    "why_now": "租房和买房决策高风险，图片理解和清单生成可以降低信息差。",
+    "scores": {
+      "pain": 4,
+      "frequency": 2,
+      "ai_fit": 4,
+      "mvp_speed": 5,
+      "payment": 3,
+      "distribution": 5
+    },
+    "tags": [
+      "housing",
+      "screenshot",
+      "checklist",
+      "consumer"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 77
+  },
+  {
+    "id": "mp-010",
+    "title": "二手交易砍价话术助手",
+    "status": "seed-hypothesis",
+    "category": "chat-workflow",
+    "target_user": "闲鱼买家、二手卖家、代拍代购",
+    "signal_sources": [
+      "闲鱼经验帖",
+      "小红书二手交易",
+      "抖音评论"
+    ],
+    "trigger_phrases": [
+      "怎么砍价",
+      "卖家这样回我",
+      "求话术",
+      "怕被骗"
+    ],
+    "user_scene": "二手交易里价格、瑕疵、验货、邮费、退换都需要谈，用户不知道怎么说。",
+    "input": "商品描述、聊天记录、目标价格",
+    "output": "砍价话术、风险问题、验货清单",
+    "current_workaround": "照抄攻略话术，或者临时硬聊。",
+    "ai_product": "根据商品和聊天上下文生成谈价建议。",
+    "mvp_scope": "粘贴商品信息和聊天，返回 5 条可复制话术。",
+    "charge_model": "免费拉新 + 高级模板包。",
+    "why_now": "二手交易场景碎片多，社交平台上大量用户求交易话术。",
+    "scores": {
+      "pain": 3,
+      "frequency": 3,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 2,
+      "distribution": 5
+    },
+    "tags": [
+      "secondhand",
+      "negotiation",
+      "chat",
+      "consumer"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 77
+  },
+  {
+    "id": "mp-011",
+    "title": "菜单照片外卖套餐文案生成器",
+    "status": "seed-hypothesis",
+    "category": "photo-to-output",
+    "target_user": "小餐饮店、外卖店、夜宵摊、咖啡店",
+    "signal_sources": [
+      "美团外卖商家经验",
+      "抖音本地生活",
+      "小红书餐饮开店"
+    ],
+    "trigger_phrases": [
+      "套餐怎么搭",
+      "菜单怎么写",
+      "外卖标题",
+      "销量不好"
+    ],
+    "user_scene": "小餐饮店有菜单和菜品图，但不会写外卖套餐标题、卖点和详情。",
+    "input": "菜单照片、菜品照片、价格",
+    "output": "套餐组合、标题、卖点、详情页文案",
+    "current_workaround": "抄同行外卖页面，临时改几个字。",
+    "ai_product": "拍菜单后生成外卖平台文案。",
+    "mvp_scope": "上传菜单图，选择客单价，生成 10 个套餐标题。",
+    "charge_model": "49-199 元/月，或菜单优化单次收费。",
+    "why_now": "本地生活平台竞争内容化，小店缺少低成本运营工具。",
+    "scores": {
+      "pain": 4,
+      "frequency": 3,
+      "ai_fit": 4,
+      "mvp_speed": 4,
+      "payment": 4,
+      "distribution": 4
+    },
+    "tags": [
+      "restaurant",
+      "photo",
+      "copywriting",
+      "local-business"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 77
+  },
+  {
+    "id": "mp-017",
+    "title": "儿童绘本照片讲读稿生成器",
+    "status": "seed-hypothesis",
+    "category": "photo-to-output",
+    "target_user": "低龄儿童家长、绘本馆、托育老师",
+    "signal_sources": [
+      "小红书育儿",
+      "抖音亲子",
+      "微信群"
+    ],
+    "trigger_phrases": [
+      "不会讲绘本",
+      "怎么互动",
+      "求提问",
+      "亲子阅读"
+    ],
+    "user_scene": "家长买了绘本但不知道怎么讲，更不知道如何提问和延伸互动。",
+    "input": "绘本页面照片、孩子年龄",
+    "output": "讲读稿、互动提问、延伸小游戏、词汇解释",
+    "current_workaround": "照着文字念，或者搜索同款绘本讲解。",
+    "ai_product": "拍绘本页面后生成适龄讲读脚本。",
+    "mvp_scope": "上传 3 页照片和年龄，返回 5 分钟亲子讲读稿。",
+    "charge_model": "19-69 元/月，或按绘本包收费。",
+    "why_now": "多模态识图能理解画面，家长对低门槛亲子陪伴工具有需求。",
+    "scores": {
+      "pain": 3,
+      "frequency": 4,
+      "ai_fit": 4,
+      "mvp_speed": 4,
+      "payment": 3,
+      "distribution": 5
+    },
+    "tags": [
+      "parenting",
+      "photo",
+      "storybook",
+      "education"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 77
+  },
+  {
+    "id": "mp-023",
+    "title": "家电报错代码照片解释卡",
+    "status": "seed-hypothesis",
+    "category": "photo-to-output",
+    "target_user": "家电维修师傅、租客、物业客服",
+    "signal_sources": [
+      "小红书维修",
+      "抖音家电",
+      "微信群"
+    ],
+    "trigger_phrases": [
+      "这个故障码什么意思",
+      "空调报错",
+      "洗衣机报错",
+      "先问什么"
+    ],
+    "user_scene": "用户看到家电屏幕上的报错代码，不知道该拍什么、问什么、是否需要上门。",
+    "input": "报错代码照片、品牌型号、故障描述",
+    "output": "可能含义、需要补充的信息、给维修师傅的话术",
+    "current_workaround": "百度搜索故障码，或者直接发图问师傅。",
+    "ai_product": "拍报错代码后生成维修沟通卡。",
+    "mvp_scope": "上传照片和品牌，返回要问的 8 个问题和上门前检查项。",
+    "charge_model": "导流给维修服务，或师傅端 49 元/月。",
+    "why_now": "图像识别和知识检索能把用户问题整理成维修前信息包。",
+    "scores": {
+      "pain": 4,
+      "frequency": 3,
+      "ai_fit": 4,
+      "mvp_speed": 4,
+      "payment": 4,
+      "distribution": 4
+    },
+    "tags": [
+      "appliance",
+      "repair",
+      "photo",
+      "local-service"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 77
+  },
+  {
+    "id": "mp-014",
+    "title": "旅游攻略评论避坑点提取器",
+    "status": "seed-hypothesis",
+    "category": "social-comments",
+    "target_user": "旅行规划者、亲子游用户、旅游博主",
+    "signal_sources": [
+      "小红书旅游攻略",
+      "抖音旅游评论",
+      "携程评论"
+    ],
+    "trigger_phrases": [
+      "避雷",
+      "到底值不值",
+      "评论劝退",
+      "求总结"
+    ],
+    "user_scene": "用户看攻略时更关心评论里的避坑点，但评论很多且真假混杂。",
+    "input": "攻略评论、景点评论、酒店评论",
+    "output": "避坑点、适合人群、不适合人群、必问问题",
+    "current_workaround": "手动翻评论，收藏大量笔记。",
+    "ai_product": "粘贴评论后生成旅行决策摘要。",
+    "mvp_scope": "导入 200 条评论，输出避坑 Top 10。",
+    "charge_model": "9.9 元单次，或旅行季工具包。",
+    "why_now": "用户决策依赖评论，AI 聚类可以节省大量筛选时间。",
+    "scores": {
+      "pain": 3,
+      "frequency": 2,
+      "ai_fit": 5,
+      "mvp_speed": 5,
+      "payment": 2,
+      "distribution": 5
+    },
+    "tags": [
+      "travel",
+      "comments",
+      "summary",
+      "consumer"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 73
+  },
+  {
+    "id": "mp-018",
+    "title": "宠物就诊前症状整理助手",
+    "status": "seed-hypothesis",
+    "category": "document-cleanup",
+    "target_user": "宠物主人、宠物店、宠物医院前台",
+    "signal_sources": [
+      "小红书宠物",
+      "抖音宠物评论",
+      "微信群"
+    ],
+    "trigger_phrases": [
+      "要不要去医院",
+      "怎么跟医生说",
+      "症状记录",
+      "求清单"
+    ],
+    "user_scene": "宠物主人去医院前，症状照片、时间线、吃喝排便记录散乱，描述不清楚。",
+    "input": "症状文字、照片、视频描述、时间线",
+    "output": "就诊前摘要、观察清单、需要问医生的问题",
+    "current_workaround": "临时翻相册和聊天记录，现场凭记忆描述。",
+    "ai_product": "把宠物情况整理成给医生看的就诊摘要。",
+    "mvp_scope": "表单输入症状和照片说明，生成一页就诊摘要。",
+    "charge_model": "9.9 元单次，或宠物健康记录包。",
+    "why_now": "AI 适合整理材料和生成问诊摘要，但不需要做医疗诊断。",
+    "scores": {
+      "pain": 4,
+      "frequency": 2,
+      "ai_fit": 4,
+      "mvp_speed": 4,
+      "payment": 3,
+      "distribution": 5
+    },
+    "tags": [
+      "pet",
+      "summary",
+      "checklist",
+      "photo"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 73
+  },
+  {
+    "id": "mp-029",
+    "title": "保险理赔材料清单助手",
+    "status": "seed-hypothesis",
+    "category": "document-cleanup",
+    "target_user": "普通消费者、保险代理人、企业行政",
+    "signal_sources": [
+      "小红书理赔经验",
+      "微信群",
+      "客服聊天"
+    ],
+    "trigger_phrases": [
+      "理赔材料",
+      "缺什么资料",
+      "怎么整理",
+      "被退回"
+    ],
+    "user_scene": "用户理赔时材料分散，容易漏传、命名混乱或不知道下一步问什么。",
+    "input": "理赔类型、已有材料照片、客服要求",
+    "output": "材料清单、缺失项、命名规则、给客服的问题",
+    "current_workaround": "反复问客服，照着经验帖手动整理。",
+    "ai_product": "把理赔材料整理成提交前检查清单。",
+    "mvp_scope": "选择理赔类型，上传材料名，输出缺失项和整理步骤。",
+    "charge_model": "9.9 元单次，或代理人效率工具。",
+    "why_now": "AI 适合材料整理和流程提醒，但不做赔付判断或法律承诺。",
+    "scores": {
+      "pain": 5,
+      "frequency": 2,
+      "ai_fit": 4,
+      "mvp_speed": 4,
+      "payment": 3,
+      "distribution": 4
+    },
+    "tags": [
+      "insurance",
+      "documents",
+      "checklist",
+      "consumer"
+    ],
+    "collected_at": "2026-06-26",
+    "landing_score": 73
+  }
+];
+
+window.RADAR_SIGNALS = [
+  {
+    "id": "sig-001",
+    "platform": "小红书",
+    "observed_pattern": "评论区多人求总结、求清单、求工具。",
+    "user_type": "内容账号运营者",
+    "pain_signal": "内容爆了以后评论太多，人工翻不出高频问题。",
+    "input": "评论区文本或截图",
+    "desired_output": "用户真正关心的问题、购买顾虑、可转化话术",
+    "linked_opportunity": "mp-001",
+    "confidence": 4,
+    "collected_at": "2026-06-26",
+    "privacy_note": "只记录需求摘要，不保存用户原文和账号。"
+  },
+  {
+    "id": "sig-002",
+    "platform": "抖音直播",
+    "observed_pattern": "直播团队下播后复盘依赖助播记忆。",
+    "user_type": "直播间运营",
+    "pain_signal": "评论滚动太快，无法复盘用户最关心的价格、规格、售后。",
+    "input": "直播评论导出或助播记录",
+    "desired_output": "高频问题、话术漏洞、下场直播优化点",
+    "linked_opportunity": "mp-015",
+    "confidence": 4,
+    "collected_at": "2026-06-26",
+    "privacy_note": "优先使用商家自己导出的评论。"
+  },
+  {
+    "id": "sig-003",
+    "platform": "微信",
+    "observed_pattern": "用户经常把聊天截图发给朋友问怎么回。",
+    "user_type": "销售、客服、自由职业者",
+    "pain_signal": "遇到砍价、催款、投诉、拒绝时不知道怎么回更合适。",
+    "input": "聊天截图",
+    "desired_output": "不同语气的可复制回复",
+    "linked_opportunity": "mp-002",
+    "confidence": 4,
+    "collected_at": "2026-06-26",
+    "privacy_note": "截图需要用户主动上传，并提醒打码。"
+  },
+  {
+    "id": "sig-004",
+    "platform": "微信群",
+    "observed_pattern": "小老板月底翻相册、微信记录补账。",
+    "user_type": "个体户、小团队老板",
+    "pain_signal": "票据、收款截图、转账记录散落，月底整理很痛苦。",
+    "input": "票据照片、收款截图",
+    "desired_output": "收入支出分类、月度利润表、CSV",
+    "linked_opportunity": "mp-006",
+    "confidence": 5,
+    "collected_at": "2026-06-26",
+    "privacy_note": "不上传敏感实名信息，先做本地处理或打码。"
+  },
+  {
+    "id": "sig-005",
+    "platform": "小红书",
+    "observed_pattern": "大量用户在租房攻略下问具体房源能不能租。",
+    "user_type": "租房者",
+    "pain_signal": "看到房源截图后不知道要问中介什么，也不会判断风险。",
+    "input": "房源截图、户型图",
+    "desired_output": "看房问题清单、风险提示、沟通话术",
+    "linked_opportunity": "mp-009",
+    "confidence": 3,
+    "collected_at": "2026-06-26",
+    "privacy_note": "避免承诺投资或法律判断，只做清单辅助。"
+  },
+  {
+    "id": "sig-006",
+    "platform": "Boss直聘/小红书",
+    "observed_pattern": "小公司招聘帖从正式 JD 复制过来，社交平台没人看。",
+    "user_type": "小公司 HR、门店老板",
+    "pain_signal": "岗位描述太官方，不知道怎么写成小红书招聘帖。",
+    "input": "招聘 JD",
+    "desired_output": "招聘帖标题、正文、福利卖点、私信回复",
+    "linked_opportunity": "mp-007",
+    "confidence": 3,
+    "collected_at": "2026-06-26",
+    "privacy_note": "不采集候选人隐私。"
+  },
+  {
+    "id": "sig-007",
+    "platform": "闲鱼/小红书",
+    "observed_pattern": "二手交易用户反复求砍价和防骗话术。",
+    "user_type": "闲鱼买家、二手卖家",
+    "pain_signal": "商品瑕疵、邮费、验货和退换都要谈，不知道怎么说。",
+    "input": "商品描述、聊天记录",
+    "desired_output": "砍价话术、验货清单、风险问题",
+    "linked_opportunity": "mp-010",
+    "confidence": 3,
+    "collected_at": "2026-06-26",
+    "privacy_note": "提醒用户隐藏手机号、地址和实名信息。"
+  },
+  {
+    "id": "sig-008",
+    "platform": "小红书/抖音",
+    "observed_pattern": "家长或宠物主人发症状记录，求就诊前该怎么描述。",
+    "user_type": "宠物主人",
+    "pain_signal": "去医院前症状、时间线、照片散乱，描述不清楚。",
+    "input": "宠物症状文字、照片、时间线",
+    "desired_output": "就诊前摘要、要问医生的问题、观察记录表",
+    "linked_opportunity": "mp-018",
+    "confidence": 3,
+    "collected_at": "2026-06-26",
+    "privacy_note": "不做诊断，只整理就诊材料。"
+  },
+  {
+    "id": "sig-009",
+    "platform": "淘宝/拼多多/小红书",
+    "observed_pattern": "卖家看竞品评论，但不知道怎么转成选品或改品判断。",
+    "user_type": "电商卖家、小品牌主理人",
+    "pain_signal": "大量评论里隐藏需求和不满，人工看很慢。",
+    "input": "商品评论",
+    "desired_output": "差评原因、买点、避雷点、改品建议",
+    "linked_opportunity": "mp-008",
+    "confidence": 5,
+    "collected_at": "2026-06-26",
+    "privacy_note": "优先使用用户自有店铺或公开摘要。"
+  },
+  {
+    "id": "sig-010",
+    "platform": "微信/飞书/钉钉",
+    "observed_pattern": "长语音安排任务，接收者容易漏项。",
+    "user_type": "小团队老板、助理、运营",
+    "pain_signal": "语音和聊天里有很多待办，但没人整理成清单。",
+    "input": "语音转写、聊天记录",
+    "desired_output": "任务清单、负责人、截止时间、待确认问题",
+    "linked_opportunity": "mp-012",
+    "confidence": 4,
+    "collected_at": "2026-06-26",
+    "privacy_note": "需要用户授权导入自己的工作内容。"
+  },
+  {
+    "id": "sig-011",
+    "platform": "小红书/公众号",
+    "observed_pattern": "用户收藏大量长文，但真正需要的是执行清单。",
+    "user_type": "学习者、运营、自由职业者",
+    "pain_signal": "文章太长，收藏后不执行，不知道第一步做什么。",
+    "input": "文章链接或正文",
+    "desired_output": "行动清单、模板、第一步任务",
+    "linked_opportunity": "mp-021",
+    "confidence": 3,
+    "collected_at": "2026-06-26",
+    "privacy_note": "不搬运原文，只处理用户提供的内容。"
+  },
+  {
+    "id": "sig-012",
+    "platform": "表格/微信群",
+    "observed_pattern": "报名表、团购表、接龙表经常有重复、漏填、格式混乱。",
+    "user_type": "社群团长、活动组织者、课程助教",
+    "pain_signal": "每次都要人工查重、补手机号、整理名单。",
+    "input": "报名表、接龙截图、Excel",
+    "desired_output": "去重名单、缺失项、分组、提醒话术",
+    "linked_opportunity": "mp-030",
+    "confidence": 4,
+    "collected_at": "2026-06-26",
+    "privacy_note": "名单数据应由组织者授权处理。"
+  }
+];

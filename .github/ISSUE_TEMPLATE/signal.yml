@@ -1,0 +1,53 @@
+name: Submit raw demand signal
+description: Record a raw pain signal before it becomes a full opportunity card.
+title: "[Signal] "
+labels: ["signal"]
+body:
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      placeholder: 小红书 / 抖音 / 微信群 / Shopify / Chrome Web Store
+    validations:
+      required: true
+  - type: input
+    id: user_type
+    attributes:
+      label: User type
+      placeholder: 直播间运营 / 小卖家 / 自由职业者
+    validations:
+      required: true
+  - type: textarea
+    id: pain_signal
+    attributes:
+      label: Pain signal
+      description: Summarize the demand. Do not paste private messages or personal data.
+      placeholder: 很多人在评论区问有没有工具能把直播评论整理成复盘。
+    validations:
+      required: true
+  - type: input
+    id: input
+    attributes:
+      label: Possible input
+      placeholder: 评论文本 / 截图 / 语音 / 表格
+    validations:
+      required: true
+  - type: input
+    id: output
+    attributes:
+      label: Desired output
+      placeholder: 高频问题 / 回复话术 / 清单 / 报价
+    validations:
+      required: true
+  - type: dropdown
+    id: confidence
+    attributes:
+      label: Confidence
+      options:
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
+    validations:
+      required: true

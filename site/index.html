@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Micro Product Radar</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead">
+        <div>
+          <p class="eyebrow">AI MICRO PRODUCT RADAR</p>
+          <h1>小产品机会雷达</h1>
+        </div>
+        <div class="date-stamp">
+          <span>Seed</span>
+          <strong id="totalCount">0</strong>
+        </div>
+      </header>
+
+      <section class="control-band" aria-label="筛选机会">
+        <label class="search-box">
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="评论、截图、报价、直播..." />
+        </label>
+        <label>
+          <span>Category</span>
+          <select id="categoryFilter">
+            <option value="all">全部分类</option>
+          </select>
+        </label>
+        <label>
+          <span>Source</span>
+          <select id="sourceFilter">
+            <option value="all">全部来源</option>
+          </select>
+        </label>
+        <label>
+          <span>Sort</span>
+          <select id="sortSelect">
+            <option value="score">落地分数</option>
+            <option value="mvp">MVP 速度</option>
+            <option value="payment">付费可能</option>
+            <option value="frequency">频率</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="metrics" aria-label="雷达概览">
+        <div class="metric">
+          <span>平均分</span>
+          <strong id="averageScore">0</strong>
+        </div>
+        <div class="metric">
+          <span>优先验证</span>
+          <strong id="hotCount">0</strong>
+        </div>
+        <div class="metric">
+          <span>最高频输入</span>
+          <strong id="topInput">-</strong>
+        </div>
+        <div class="metric">
+          <span>信号样本</span>
+          <strong id="signalCount">0</strong>
+        </div>
+      </section>
+
+      <section class="signal-board" aria-label="需求信号">
+        <div class="signal-panel">
+          <h2>Input Mix</h2>
+          <div id="inputMix" class="input-mix"></div>
+        </div>
+        <div class="signal-panel">
+          <h2>Signal Inbox</h2>
+          <div id="signalList" class="signal-list"></div>
+        </div>
+      </section>
+
+      <section class="radar-layout">
+        <aside class="lane-panel" aria-label="分数区间">
+          <h2>Radar Lanes</h2>
+          <div id="lanes" class="lanes"></div>
+        </aside>
+        <section class="opportunity-grid" id="opportunityGrid" aria-live="polite"></section>
+      </section>
+    </main>
+
+    <script src="./data.js"></script>
+    <script src="./app.js" defer></script>
+  </body>
+</html>

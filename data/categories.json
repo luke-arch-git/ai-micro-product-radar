@@ -1,0 +1,33 @@
+[
+  {
+    "id": "social-comments",
+    "name": "评论区需求",
+    "description": "从小红书、抖音、直播、社区评论中提取抱怨、求助、购买顾虑和产品机会。"
+  },
+  {
+    "id": "chat-workflow",
+    "name": "聊天工作流",
+    "description": "把微信、私信、客服聊天、语音留言转成回复、待办、线索和话术。"
+  },
+  {
+    "id": "photo-to-output",
+    "name": "照片到结果",
+    "description": "从现场照片、商品图、票据、菜单、截图生成清单、报价、文案或判断。"
+  },
+  {
+    "id": "content-repurpose",
+    "name": "内容再加工",
+    "description": "把视频字幕、笔记、评论、直播内容变成标题、切片、选题、卖点和脚本。"
+  },
+  {
+    "id": "document-cleanup",
+    "name": "文档整理",
+    "description": "把 PDF、表格、截图、合同、简历、作业等转成结构化内容或校验结果。"
+  },
+  {
+    "id": "tiny-ops",
+    "name": "小生意运营",
+    "description": "围绕报价、记账、差评、预约、跟进、复盘等高频小任务做小产品。"
+  }
+]
+

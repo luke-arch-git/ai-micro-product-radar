@@ -1,0 +1,55 @@
+name: Submit AI micro product opportunity
+description: Propose a tiny AI product opportunity backed by a real pain signal.
+title: "[Opportunity] "
+labels: ["opportunity"]
+body:
+  - type: input
+    id: title
+    attributes:
+      label: Opportunity title
+      placeholder: 小红书评论区需求提取器
+    validations:
+      required: true
+  - type: input
+    id: target_user
+    attributes:
+      label: Target user
+      placeholder: 做账号、卖课、卖货的人
+    validations:
+      required: true
+  - type: textarea
+    id: pain_signal
+    attributes:
+      label: Pain signal
+      description: Where did you see this demand? Summarize the source instead of copying private content.
+      placeholder: 多条评论都在问“有没有工具能整理评论区高频问题”。
+    validations:
+      required: true
+  - type: input
+    id: input
+    attributes:
+      label: Input
+      placeholder: 评论区文本或截图
+    validations:
+      required: true
+  - type: input
+    id: output
+    attributes:
+      label: Output
+      placeholder: 高频问题、购买顾虑、私信话术
+    validations:
+      required: true
+  - type: textarea
+    id: workaround
+    attributes:
+      label: Current workaround
+      placeholder: 用户现在手动翻评论、截图、复制到表格。
+    validations:
+      required: true
+  - type: textarea
+    id: mvp
+    attributes:
+      label: 7-day MVP
+      placeholder: 粘贴 100 条评论，返回需求 Top 10 和 10 条可复制回复。
+    validations:
+      required: true
