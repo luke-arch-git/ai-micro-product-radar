@@ -75,6 +75,8 @@
 ├── site/
 │   ├── app.js
 │   ├── index.html
+│   ├── xianyu.html
+│   ├── xianyu.js
 │   └── styles.css
 ├── templates/
 │   └── daily-signal-log.md
@@ -93,6 +95,12 @@
 site/index.html
 ```
 
+闲鱼验证页：
+
+```text
+site/xianyu.html
+```
+
 校验数据并生成网页数据文件：
 
 ```bash
@@ -100,6 +108,12 @@ npm run validate
 ```
 
 推到 GitHub 后，`pages.yml` 会把 `site/` 发布成 GitHub Pages。
+
+## 闲鱼验证思路
+
+`site/xianyu.html` 会把机会卡转成可测试的闲鱼服务：标题、测试价、交付物、上架文案和风险提示。
+
+建议只发布窄服务，比如“帮你整理评论区高频问题”“帮你把表格查重清洗”“帮你写差评补救回复”。不要发布自动爬取、外挂、隐私数据处理、保证涨粉成交、医疗法律金融结论等高风险内容。
 
 ## 每日工作流
 

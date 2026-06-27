@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Xianyu Validation Desk - AI Micro Product Radar</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead validation-head">
+        <div>
+          <p class="eyebrow">XIAN_YU VALIDATION DESK</p>
+          <h1>闲鱼验证台</h1>
+        </div>
+        <nav class="page-nav" aria-label="页面导航">
+          <a href="./index.html">Radar</a>
+          <a aria-current="page" href="./xianyu.html">Xianyu</a>
+        </nav>
+      </header>
+
+      <section class="thesis-band">
+        <div>
+          <h2>思路可以做，但卖的是小服务，不是空泛 AI 产品。</h2>
+          <p>
+            先把每个机会包装成一个窄交付：用户给截图、评论、语音、表格或照片，你人工加 AI 处理后交付一份清单、文案、复盘或表格。
+            有人问、有人成交，再决定是否做自动化。
+          </p>
+        </div>
+        <div class="rule-list">
+          <strong>上架红线</strong>
+          <span>不写自动爬取、外挂、批量采集。</span>
+          <span>不处理未授权隐私数据。</span>
+          <span>不承诺涨粉、成交、收益、诊断结论。</span>
+          <span>先做样例，满意后再收完整单。</span>
+        </div>
+      </section>
+
+      <section class="control-band" aria-label="筛选闲鱼测试服务">
+        <label class="search-box">
+          <span>Search</span>
+          <input id="xianyuSearch" type="search" placeholder="评论、报价、表格、宠物、招聘..." />
+        </label>
+        <label>
+          <span>Category</span>
+          <select id="xianyuCategory">
+            <option value="all">全部分类</option>
+          </select>
+        </label>
+        <label>
+          <span>Price Band</span>
+          <select id="xianyuPrice">
+            <option value="all">全部测试价</option>
+            <option value="entry">9.9-29</option>
+            <option value="standard">29-99</option>
+            <option value="pro">99-299</option>
+          </select>
+        </label>
+        <label>
+          <span>Sort</span>
+          <select id="xianyuSort">
+            <option value="score">优先上架</option>
+            <option value="payment">付费可能</option>
+            <option value="mvp">交付速度</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="metrics" aria-label="验证概览">
+        <div class="metric">
+          <span>可测试服务</span>
+          <strong id="listingCount">0</strong>
+        </div>
+        <div class="metric">
+          <span>优先上架</span>
+          <strong id="readyCount">0</strong>
+        </div>
+        <div class="metric">
+          <span>建议先发</span>
+          <strong id="firstBatch">0</strong>
+        </div>
+        <div class="metric">
+          <span>最低测试价</span>
+          <strong id="floorPrice">9.9</strong>
+        </div>
+      </section>
+
+      <section class="playbook-strip">
+        <article>
+          <span>1</span>
+          <b>先发 10 个</b>
+          <p>不要一次全铺。先选分数高、交付快、无敏感风险的服务。</p>
+        </article>
+        <article>
+          <span>2</span>
+          <b>只收输入样例</b>
+          <p>先让对方发 1 份截图或文本，免费/低价给一小段样例。</p>
+        </article>
+        <article>
+          <span>3</span>
+          <b>记录问单</b>
+          <p>只看三件事：有没有人问、问什么、愿不愿意发原始材料。</p>
+        </article>
+        <article>
+          <span>4</span>
+          <b>成交再自动化</b>
+          <p>三单以上再做网页或脚本。先人工服务，别先写大系统。</p>
+        </article>
+      </section>
+
+      <section class="xianyu-grid" id="xianyuGrid" aria-live="polite"></section>
+    </main>
+
+    <script src="./data.js"></script>
+    <script src="./xianyu.js" defer></script>
+  </body>
+</html>
+
