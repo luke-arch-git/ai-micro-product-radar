@@ -5,6 +5,7 @@ const root = path.resolve(__dirname, "..");
 const opportunitiesPath = path.join(root, "data", "opportunities.json");
 const categoriesPath = path.join(root, "data", "categories.json");
 const signalsPath = path.join(root, "data", "signals.json");
+const githubSignalsPath = path.join(root, "data", "github-signals.json");
 const siteDataPath = path.join(root, "site", "data.js");
 
 const requiredFields = [
@@ -43,6 +44,29 @@ const signalFields = [
   "collected_at",
   "privacy_note"
 ];
+const githubSignalFields = [
+  "id",
+  "status",
+  "repo_full_name",
+  "repo_url",
+  "description",
+  "stars",
+  "language",
+  "license",
+  "capability",
+  "gap_pattern",
+  "chinese_user",
+  "demand_translation",
+  "xianyu_service",
+  "listing_title",
+  "test_price",
+  "deliverables",
+  "risk_level",
+  "boundary",
+  "linked_opportunity",
+  "tags",
+  "verified_at"
+];
 
 function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
@@ -61,6 +85,7 @@ function scoreOpportunity(item) {
 const categories = readJson(categoriesPath);
 const opportunities = readJson(opportunitiesPath);
 const signals = readJson(signalsPath);
+const githubSignals = readJson(githubSignalsPath);
 const categoryIds = new Set(categories.map((category) => category.id));
 const ids = new Set();
 const opportunityIds = new Set();
@@ -130,6 +155,44 @@ if (!Array.isArray(signals)) {
   }
 }
 
+const githubSignalIds = new Set();
+if (!Array.isArray(githubSignals)) {
+  fail("data/github-signals.json must be an array.");
+} else {
+  for (const signal of githubSignals) {
+    for (const field of githubSignalFields) {
+      if (!(field in signal)) {
+        fail(`${signal.id || "unknown"} is missing required GitHub signal field: ${field}`);
+      }
+    }
+
+    if (githubSignalIds.has(signal.id)) {
+      fail(`Duplicate GitHub signal id: ${signal.id}`);
+    }
+    githubSignalIds.add(signal.id);
+
+    if (!/^https:\/\/github\.com\/[^/]+\/[^/]+$/.test(signal.repo_url)) {
+      fail(`${signal.id} repo_url must be a canonical GitHub repository URL.`);
+    }
+
+    if (!Number.isInteger(signal.stars) || signal.stars < 0) {
+      fail(`${signal.id} stars must be a non-negative integer.`);
+    }
+
+    if (!Array.isArray(signal.deliverables) || signal.deliverables.length === 0) {
+      fail(`${signal.id} deliverables must be a non-empty array.`);
+    }
+
+    if (!Array.isArray(signal.tags) || signal.tags.length === 0) {
+      fail(`${signal.id} tags must be a non-empty array.`);
+    }
+
+    if (!opportunityIds.has(signal.linked_opportunity)) {
+      fail(`${signal.id} links to unknown opportunity: ${signal.linked_opportunity}`);
+    }
+  }
+}
+
 if (process.exitCode) {
   process.exit(process.exitCode);
 }
@@ -144,10 +207,12 @@ const enriched = opportunities
 const sitePayload = [
   `window.RADAR_CATEGORIES = ${JSON.stringify(categories, null, 2)};`,
   `window.OPPORTUNITIES = ${JSON.stringify(enriched, null, 2)};`,
-  `window.RADAR_SIGNALS = ${JSON.stringify(signals, null, 2)};`
+  `window.RADAR_SIGNALS = ${JSON.stringify(signals, null, 2)};`,
+  `window.GITHUB_GAP_SIGNALS = ${JSON.stringify(githubSignals, null, 2)};`
 ].join("\n\n");
 fs.writeFileSync(siteDataPath, sitePayload);
 
 console.log(`Validated ${opportunities.length} opportunities.`);
 console.log(`Validated ${signals.length} signals.`);
+console.log(`Validated ${githubSignals.length} GitHub gap signals.`);
 console.log(`Generated ${path.relative(root, siteDataPath)}.`);

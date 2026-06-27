@@ -1,0 +1,40 @@
+name: Submit GitHub gap signal
+description: Translate a GitHub project into a possible Chinese micro-service opportunity.
+title: "[GitHub Gap] "
+labels: ["github-gap"]
+body:
+  - type: input
+    id: repo
+    attributes:
+      label: GitHub repository
+      placeholder: owner/repo
+    validations:
+      required: true
+  - type: textarea
+    id: capability
+    attributes:
+      label: Project capability
+      placeholder: What new ability does this repo make easier?
+    validations:
+      required: true
+  - type: textarea
+    id: gap
+    attributes:
+      label: Information gap
+      placeholder: What will ordinary Chinese users not understand or not know how to apply?
+    validations:
+      required: true
+  - type: input
+    id: service
+    attributes:
+      label: Possible Xianyu service
+      placeholder: 帮你整理网页资料成摘要对比表
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Boundary
+      placeholder: What should this service not promise or not touch?
+    validations:
+      required: true

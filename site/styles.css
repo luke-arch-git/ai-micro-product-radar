@@ -269,6 +269,14 @@ select:focus {
   min-height: 148px;
 }
 
+.github-head {
+  min-height: 148px;
+  background:
+    linear-gradient(135deg, rgba(44, 122, 107, 0.2), transparent 38%),
+    linear-gradient(315deg, rgba(240, 180, 41, 0.18), transparent 44%),
+    var(--surface);
+}
+
 .thesis-band {
   display: grid;
   grid-template-columns: 1.25fr 0.75fr;
@@ -310,6 +318,12 @@ select:focus {
   display: block;
   padding: 8px 0;
   border-top: 1px solid rgba(23, 23, 23, 0.18);
+}
+
+.github-thesis {
+  background:
+    linear-gradient(90deg, rgba(44, 122, 107, 0.1), transparent 58%),
+    var(--surface);
 }
 
 .playbook-strip {
@@ -447,6 +461,99 @@ select:focus {
   color: var(--muted);
   font-size: 13px;
   line-height: 1.4;
+}
+
+.github-pipeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.github-pipeline article {
+  min-height: 126px;
+  padding: 16px;
+  border: 2px solid var(--line);
+  background: #fff;
+}
+
+.github-pipeline b {
+  display: block;
+  margin-bottom: 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+}
+
+.github-pipeline p {
+  margin: 0;
+  color: #342f28;
+  line-height: 1.5;
+}
+
+.github-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.github-card {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 2px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff;
+  box-shadow: 4px 4px 0 rgba(23, 23, 23, 0.16);
+}
+
+.github-card-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: start;
+}
+
+.github-card h3 {
+  margin: 8px 0 6px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 27px;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+
+.github-card a {
+  color: var(--accent-2);
+  font-size: 13px;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.translation-stack {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.translation-stack div,
+.boundary-box {
+  padding: 10px;
+  border: 1px solid rgba(23, 23, 23, 0.26);
+  background: #fffaf0;
+}
+
+.translation-stack b,
+.boundary-box b {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.translation-stack p,
+.boundary-box p {
+  margin: 0;
+  line-height: 1.48;
 }
 
 .lane-panel {
@@ -616,6 +723,8 @@ select:focus {
   .signal-board,
   .thesis-band,
   .playbook-strip,
+  .github-pipeline,
+  .github-grid,
   .xianyu-grid,
   .opportunity-grid {
     grid-template-columns: 1fr;
@@ -690,8 +799,10 @@ select:focus {
   }
 
   .xianyu-card-head,
+  .github-card-head,
   .validation-actions,
-  .listing-line {
+  .listing-line,
+  .translation-stack {
     grid-template-columns: 1fr;
   }
 }

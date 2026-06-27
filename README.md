@@ -9,6 +9,7 @@
 这个项目把“需求信号”和“产品机会”分开：
 
 - `data/signals.json`：原始需求信号。比如评论区有人求工具、社群里有人抱怨、用户在找模板或代办。
+- `data/github-signals.json`：GitHub 信息差信号。记录开源项目的新能力如何翻译成中文需求和闲鱼服务。
 - `data/opportunities.json`：产品化后的机会卡。每张卡都必须写清楚输入、输出、笨办法、MVP 和收费路径。
 
 这样做的好处是：每天先大量收集信号，再把少数高质量信号整理成机会，不会把灵感误当成需求。
@@ -65,6 +66,7 @@
 .
 ├── data/
 │   ├── categories.json
+│   ├── github-signals.json
 │   ├── opportunities.json
 │   └── signals.json
 ├── methods/
@@ -74,6 +76,8 @@
 │   └── validate-data.js
 ├── site/
 │   ├── app.js
+│   ├── github.html
+│   ├── github.js
 │   ├── index.html
 │   ├── xianyu.html
 │   ├── xianyu.js
@@ -95,6 +99,12 @@
 site/index.html
 ```
 
+GitHub 信息差雷达：
+
+```text
+site/github.html
+```
+
 闲鱼验证页：
 
 ```text
@@ -114,6 +124,12 @@ npm run validate
 `site/xianyu.html` 会把机会卡转成可测试的闲鱼服务：标题、测试价、交付物、上架文案和风险提示。
 
 建议只发布窄服务，比如“帮你整理评论区高频问题”“帮你把表格查重清洗”“帮你写差评补救回复”。不要发布自动爬取、外挂、隐私数据处理、保证涨粉成交、医疗法律金融结论等高风险内容。
+
+## GitHub 信息差思路
+
+`site/github.html` 会把 GitHub 开源项目翻译成中文服务机会：项目能力、信息差、中文需求、闲鱼服务和交付边界。
+
+原则是：GitHub 是情报源，不是货源。不要倒卖代码或冒充原创工具；可以卖配置建议、资料整理、教程、流程图、轻量定制和人工交付。
 
 ## 每日工作流
 

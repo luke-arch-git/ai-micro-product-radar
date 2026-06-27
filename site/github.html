@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GitHub Gap Radar - AI Micro Product Radar</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="masthead github-head">
+        <div>
+          <p class="eyebrow">GITHUB GAP RADAR</p>
+          <h1>信息差雷达</h1>
+        </div>
+        <nav class="page-nav" aria-label="页面导航">
+          <a href="./index.html">Radar</a>
+          <a aria-current="page" href="./github.html">GitHub</a>
+          <a href="./xianyu.html">Xianyu</a>
+        </nav>
+      </header>
+
+      <section class="thesis-band github-thesis">
+        <div>
+          <h2>GitHub 不是货源，是情报源。</h2>
+          <p>
+            这个页面把开源项目里的新能力翻译成中文普通用户能理解的小需求，再进一步包装成可在闲鱼测试的服务。
+            不搬代码、不冒充原创，只卖配置、整理、教程、轻量定制和人工交付。
+          </p>
+        </div>
+        <div class="rule-list">
+          <strong>翻译链路</strong>
+          <span>项目能力：这个 repo 新增了什么能力。</span>
+          <span>信息差：普通中文用户哪里看不懂。</span>
+          <span>需求翻译：它能解决什么具体麻烦。</span>
+          <span>验证服务：先挂闲鱼测试有没有人问。</span>
+        </div>
+      </section>
+
+      <section class="control-band" aria-label="筛选 GitHub 信息差">
+        <label class="search-box">
+          <span>Search</span>
+          <input id="githubSearch" type="search" placeholder="自动化、知识库、网页、录音..." />
+        </label>
+        <label>
+          <span>Risk</span>
+          <select id="githubRisk">
+            <option value="all">全部风险</option>
+            <option value="较低">较低</option>
+            <option value="中等">中等</option>
+            <option value="谨慎">谨慎</option>
+          </select>
+        </label>
+        <label>
+          <span>Price</span>
+          <select id="githubPrice">
+            <option value="all">全部价格</option>
+            <option value="39">39-99</option>
+            <option value="49">49-199</option>
+            <option value="99">99-299</option>
+          </select>
+        </label>
+        <label>
+          <span>Sort</span>
+          <select id="githubSort">
+            <option value="stars">GitHub 热度</option>
+            <option value="risk">低风险优先</option>
+            <option value="price">高客单优先</option>
+          </select>
+        </label>
+      </section>
+
+      <section class="metrics" aria-label="GitHub 信息差概览">
+        <div class="metric">
+          <span>信息差样本</span>
+          <strong id="gapCount">0</strong>
+        </div>
+        <div class="metric">
+          <span>低风险</span>
+          <strong id="lowRiskCount">0</strong>
+        </div>
+        <div class="metric">
+          <span>可挂闲鱼</span>
+          <strong id="serviceCount">0</strong>
+        </div>
+        <div class="metric">
+          <span>总 Star</span>
+          <strong id="starCount">0</strong>
+        </div>
+      </section>
+
+      <section class="github-pipeline" aria-label="信息差转译流程">
+        <article>
+          <b>1. 看 Star 和增长</b>
+          <p>不是为了追热点，而是判断这个能力是否刚进入主流视野。</p>
+        </article>
+        <article>
+          <b>2. 看 Issues</b>
+          <p>用户不会安装、不会配置、不会落地的地方，往往就是服务机会。</p>
+        </article>
+        <article>
+          <b>3. 翻译成中文需求</b>
+          <p>把“框架/Agent/Workflow”改写成“帮我整理、配置、复盘、生成”。</p>
+        </article>
+        <article>
+          <b>4. 上闲鱼验证</b>
+          <p>先卖一次人工交付，三单后再考虑产品化。</p>
+        </article>
+      </section>
+
+      <section class="github-grid" id="githubGrid" aria-live="polite"></section>
+    </main>
+
+    <script src="./data.js"></script>
+    <script src="./github.js" defer></script>
+  </body>
+</html>
+
