@@ -70,7 +70,16 @@ const elements = {
   focusTitle: document.querySelector("#focusTitle"),
   focusDescription: document.querySelector("#focusDescription"),
   segmentChips: document.querySelector("#segmentChips"),
+  coverageMetric: document.querySelector("#coverageMetric"),
+  coverageText: document.querySelector("#coverageText"),
+  strongestSignalTitle: document.querySelector("#strongestSignalTitle"),
+  strongestSignalText: document.querySelector("#strongestSignalText"),
+  debtMetric: document.querySelector("#debtMetric"),
+  debtText: document.querySelector("#debtText"),
   validationDeck: document.querySelector("#validationDeck"),
+  briefOutput: document.querySelector("#briefOutput"),
+  briefTitle: document.querySelector("#briefTitle"),
+  briefText: document.querySelector("#briefText"),
   inputMix: document.querySelector("#inputMix"),
   signalList: document.querySelector("#signalList"),
   grid: document.querySelector("#opportunityGrid"),
@@ -78,6 +87,7 @@ const elements = {
   search: document.querySelector("#searchInput"),
   category: document.querySelector("#categoryFilter"),
   source: document.querySelector("#sourceFilter"),
+  evidence: document.querySelector("#evidenceFilter"),
   sort: document.querySelector("#sortSelect")
 };
 
@@ -132,6 +142,22 @@ function signalStats(item) {
     count: linked.length,
     averageConfidence
   };
+}
+
+function evidenceTier(item) {
+  const stats = signalStats(item);
+  if (stats.count > 0) return "signal-backed";
+  if (item.landing_score >= 80) return "evidence-debt";
+  return "seed-only";
+}
+
+function evidenceLabel(item) {
+  const labels = {
+    "signal-backed": "有信号",
+    "evidence-debt": "缺证据",
+    "seed-only": "种子假设"
+  };
+  return labels[evidenceTier(item)];
 }
 
 function riskProfile(item) {
@@ -228,6 +254,88 @@ function validationPlan(item) {
   };
 }
 
+function validationBrief(item) {
+  const plan = validationPlan(item);
+  const risk = riskProfile(item);
+  const stats = signalStats(item);
+  return [
+    `【AI 小产品验证】${item.title}`,
+    "",
+    `目标用户：${item.target_user}`,
+    `用户场景：${item.user_scene}`,
+    `输入：${item.input}`,
+    `输出：${item.output}`,
+    "",
+    `验证话术：${plan.pitch}`,
+    `第一步：${plan.firstMove}`,
+    `通过标准：${plan.pass}`,
+    `风险边界：${plan.boundary}`,
+    "",
+    `落地分：${item.landing_score}/100`,
+    `证据：${stats.count ? `${stats.count} 条需求信号` : "暂无真实信号，需要先补证据"}`,
+    `风险：${risk.level}`,
+    `MVP：${item.mvp_scope}`,
+    `收费假设：${item.charge_model}`
+  ].join("\n");
+}
+
+async function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch (error) {
+      // Fall through to the textarea copy path. Some embedded browsers expose
+      // the Clipboard API but still block writes without a focused editable.
+    }
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  textarea.style.top = "0";
+  document.body.append(textarea);
+  textarea.focus();
+  textarea.select();
+  const copied = document.execCommand("copy");
+  textarea.remove();
+  if (!copied) throw new Error("Copy command was rejected.");
+}
+
+async function copyBriefFromButton(button) {
+  const item = opportunities.find((opportunity) => opportunity.id === button.dataset.copyBrief);
+  if (!item) return;
+
+  const originalText = button.textContent;
+  const brief = validationBrief(item);
+  elements.briefOutput.hidden = false;
+  elements.briefTitle.textContent = item.title;
+  elements.briefText.value = brief;
+  button.disabled = true;
+
+  try {
+    await copyText(brief);
+    button.textContent = "已复制";
+  } catch (error) {
+    button.textContent = "已生成";
+    elements.briefText.focus();
+    elements.briefText.select();
+  }
+
+  window.setTimeout(() => {
+    button.disabled = false;
+    button.textContent = originalText;
+  }, 1400);
+}
+
+function bindCopyButtons() {
+  for (const button of document.querySelectorAll("[data-copy-brief]")) {
+    button.addEventListener("click", () => copyBriefFromButton(button));
+  }
+}
+
 function fillFilters() {
   for (const category of categories) {
     const option = document.createElement("option");
@@ -266,11 +374,13 @@ function getBaseFiltered() {
   const query = elements.search.value.trim();
   const category = elements.category.value;
   const source = elements.source.value;
+  const evidence = elements.evidence.value;
 
   return opportunities
     .filter((item) => includesQuery(item, query))
     .filter((item) => category === "all" || item.category === category)
-    .filter((item) => source === "all" || item.signal_sources.includes(source));
+    .filter((item) => source === "all" || item.signal_sources.includes(source))
+    .filter((item) => evidence === "all" || evidenceTier(item) === evidence);
 }
 
 function getFiltered() {
@@ -328,6 +438,39 @@ function renderFocusSystem(baseItems) {
   }
 }
 
+function renderEvidenceBoard(items) {
+  const ids = new Set(items.map((item) => item.id));
+  const backed = items.filter((item) => signalStats(item).count > 0);
+  const debts = items
+    .filter((item) => evidenceTier(item) === "evidence-debt")
+    .sort((a, b) => b.landing_score - a.landing_score);
+  const activeSignals = signals
+    .filter((signal) => ids.has(signal.linked_opportunity))
+    .sort((a, b) => b.confidence - a.confidence || a.id.localeCompare(b.id));
+  const strongest = activeSignals[0];
+  const strongestOpportunity = strongest
+    ? opportunities.find((item) => item.id === strongest.linked_opportunity)
+    : null;
+
+  elements.coverageMetric.textContent = `${backed.length}/${items.length}`;
+  elements.coverageText.textContent = items.length
+    ? `${Math.round((backed.length / items.length) * 100)}% 的当前机会有至少 1 条需求信号。`
+    : "当前筛选下没有机会。";
+
+  elements.strongestSignalTitle.textContent = strongestOpportunity ? strongestOpportunity.title : "-";
+  elements.strongestSignalText.textContent = strongest
+    ? `${strongest.platform} / confidence ${strongest.confidence}：${strongest.pain_signal}`
+    : "当前筛选下没有匹配的需求信号。";
+
+  elements.debtMetric.textContent = debts.length;
+  elements.debtText.textContent = debts.length
+    ? debts
+        .slice(0, 3)
+        .map((item) => item.title)
+        .join(" / ")
+    : "没有高分缺证据机会。";
+}
+
 function renderValidationDeck(items) {
   const shortlist = [...items].sort((a, b) => priorityScore(b) - priorityScore(a)).slice(0, 3);
 
@@ -352,6 +495,7 @@ function renderValidationDeck(items) {
                 <div><b>第一步</b><p>${escapeHtml(plan.firstMove)}</p></div>
                 <div><b>通过标准</b><p>${escapeHtml(plan.pass)}</p></div>
               </div>
+              <button class="copy-brief" type="button" data-copy-brief="${escapeHtml(item.id)}">复制验证 Brief</button>
             </article>
           `;
         })
@@ -456,6 +600,7 @@ function renderCards(items) {
                 <span class="status">${escapeHtml(item.status)}</span>
                 <span class="risk-pill ${risk.className}">风险 ${risk.level}</span>
                 <span class="signal-pill">${stats.count ? `${stats.count} signals` : "seed"}</span>
+                <span class="evidence-pill">${escapeHtml(evidenceLabel(item))}</span>
               </div>
               <h3>${escapeHtml(item.title)}</h3>
             </div>
@@ -479,6 +624,7 @@ function renderCards(items) {
           <div class="tags">
             ${item.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}
           </div>
+          <button class="copy-brief compact" type="button" data-copy-brief="${escapeHtml(item.id)}">复制验证 Brief</button>
         </article>
       `;
     })
@@ -490,15 +636,17 @@ function render() {
   const items = getFiltered();
   renderFocusSystem(baseItems);
   summarize(items);
+  renderEvidenceBoard(items);
   renderValidationDeck(items);
   renderLanes(items);
   renderSignalBoard(items);
   renderCards(items);
+  bindCopyButtons();
 }
 
 fillFilters();
 render();
 
-for (const element of [elements.search, elements.category, elements.source, elements.sort]) {
+for (const element of [elements.search, elements.category, elements.source, elements.evidence, elements.sort]) {
   element.addEventListener("input", render);
 }

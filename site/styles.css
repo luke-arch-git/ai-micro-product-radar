@@ -127,7 +127,7 @@ h1 {
 
 .control-band {
   display: grid;
-  grid-template-columns: minmax(220px, 1.4fr) repeat(3, minmax(150px, 0.6fr));
+  grid-template-columns: minmax(220px, 1.2fr) repeat(4, minmax(140px, 0.55fr));
   gap: 12px;
   margin-top: 32px;
   padding: 16px;
@@ -272,6 +272,57 @@ button:focus-visible {
   background: var(--accent-3);
 }
 
+.evidence-board {
+  display: grid;
+  grid-template-columns: 0.8fr 1.25fr 0.95fr;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.evidence-panel {
+  min-height: 138px;
+  padding: 16px;
+  border: 2px solid var(--line);
+  background: #fff;
+}
+
+.evidence-primary {
+  color: #fff;
+  background: var(--ink);
+}
+
+.evidence-panel span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.evidence-primary span,
+.evidence-primary p {
+  color: #efe7d4;
+}
+
+.evidence-panel strong {
+  display: block;
+  margin-top: 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  line-height: 1.04;
+}
+
+.evidence-panel p {
+  margin: 10px 0 0;
+  color: #29241d;
+  line-height: 1.5;
+}
+
+.evidence-panel.evidence-primary p {
+  color: #efe7d4;
+}
+
 .validation-deck {
   display: grid;
   grid-template-columns: 220px 1fr;
@@ -302,7 +353,7 @@ button:focus-visible {
 
 .validation-card {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: auto 1fr auto auto;
   gap: 12px;
   min-height: 258px;
   padding: 16px;
@@ -364,7 +415,8 @@ button:focus-visible {
 }
 
 .risk-pill,
-.signal-pill {
+.signal-pill,
+.evidence-pill {
   display: inline-flex;
   align-items: center;
   min-height: 24px;
@@ -386,6 +438,79 @@ button:focus-visible {
 .risk-high {
   color: #fff;
   background: var(--accent);
+}
+
+.evidence-pill {
+  background: #f4dfbc;
+}
+
+.copy-brief {
+  min-height: 38px;
+  padding: 0 12px;
+  border: 2px solid var(--line);
+  color: #fff;
+  background: var(--ink);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.copy-brief.compact {
+  width: max-content;
+  max-width: 100%;
+}
+
+.copy-brief:disabled {
+  cursor: default;
+  opacity: 0.72;
+}
+
+.brief-output {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  margin-top: 16px;
+  padding: 16px;
+  border: 2px solid var(--line);
+  background: #fff;
+}
+
+.brief-output[hidden] {
+  display: none;
+}
+
+.brief-output div {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 12px;
+  border: 2px solid var(--line);
+  background: var(--accent-3);
+}
+
+.brief-output span {
+  color: #342f28;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.brief-output strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.brief-output textarea {
+  width: 100%;
+  min-height: 220px;
+  padding: 14px;
+  border: 2px solid var(--line);
+  resize: vertical;
+  color: var(--ink);
+  background: var(--surface);
+  font: inherit;
+  line-height: 1.55;
 }
 
 .radar-layout {
@@ -940,8 +1065,10 @@ button:focus-visible {
   .radar-layout,
   .metrics,
   .focus-system,
+  .evidence-board,
   .validation-deck,
   .validation-cards,
+  .brief-output,
   .signal-board,
   .thesis-band,
   .playbook-strip,

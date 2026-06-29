@@ -44,6 +44,15 @@
           </select>
         </label>
         <label>
+          <span>Evidence</span>
+          <select id="evidenceFilter">
+            <option value="all">全部证据</option>
+            <option value="signal-backed">有信号支撑</option>
+            <option value="evidence-debt">高分但缺证据</option>
+            <option value="seed-only">仅种子假设</option>
+          </select>
+        </label>
+        <label>
           <span>Sort</span>
           <select id="sortSelect">
             <option value="score">落地分数</option>
@@ -82,12 +91,38 @@
         <div class="focus-chips" id="segmentChips"></div>
       </section>
 
+      <section class="evidence-board" aria-label="证据看板">
+        <div class="evidence-panel evidence-primary">
+          <span>Evidence</span>
+          <strong id="coverageMetric">0/0</strong>
+          <p id="coverageText">等待数据</p>
+        </div>
+        <div class="evidence-panel">
+          <span>Strongest Signal</span>
+          <strong id="strongestSignalTitle">-</strong>
+          <p id="strongestSignalText">等待需求信号</p>
+        </div>
+        <div class="evidence-panel">
+          <span>Evidence Debt</span>
+          <strong id="debtMetric">0</strong>
+          <p id="debtText">没有高分缺证据机会</p>
+        </div>
+      </section>
+
       <section class="validation-deck" aria-label="今日验证建议">
         <div class="section-label">
           <span>Today</span>
           <h2>今日先试 3 个</h2>
         </div>
         <div id="validationDeck" class="validation-cards"></div>
+      </section>
+
+      <section class="brief-output" id="briefOutput" aria-label="验证 Brief" hidden>
+        <div>
+          <span>Validation Brief</span>
+          <strong id="briefTitle">已生成验证 Brief</strong>
+        </div>
+        <textarea id="briefText" readonly></textarea>
       </section>
 
       <section class="signal-board" aria-label="需求信号">
