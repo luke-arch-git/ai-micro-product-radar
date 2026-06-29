@@ -157,6 +157,11 @@ select:focus {
   outline-offset: 2px;
 }
 
+button:focus-visible {
+  outline: 3px solid rgba(216, 74, 43, 0.32);
+  outline-offset: 2px;
+}
+
 .metrics {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -177,6 +182,210 @@ select:focus {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 52px;
   line-height: 1;
+}
+
+.focus-system {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1.05fr);
+  gap: 16px;
+  margin-top: 16px;
+  padding: 20px;
+  border: 2px solid var(--line);
+  background:
+    linear-gradient(90deg, rgba(44, 122, 107, 0.24), transparent 60%),
+    #fff;
+}
+
+.focus-copy {
+  display: grid;
+  align-content: center;
+  gap: 10px;
+}
+
+.focus-copy span,
+.section-label span,
+.validation-headline span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.focus-copy h2,
+.section-label h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 34px;
+  line-height: 1.05;
+}
+
+.focus-copy p {
+  max-width: 680px;
+  margin: 0;
+  color: #29241d;
+  line-height: 1.62;
+}
+
+.focus-chips {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.focus-chip {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 54px;
+  padding: 10px 12px;
+  border: 2px solid var(--line);
+  color: var(--ink);
+  background: var(--surface);
+  cursor: pointer;
+  text-align: left;
+}
+
+.focus-chip span {
+  font-weight: 900;
+}
+
+.focus-chip strong {
+  display: grid;
+  place-items: center;
+  min-width: 34px;
+  height: 34px;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.focus-chip.is-active {
+  color: #fff;
+  background: var(--ink);
+}
+
+.focus-chip.is-active strong {
+  color: var(--ink);
+  background: var(--accent-3);
+}
+
+.validation-deck {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  margin-top: 16px;
+  align-items: stretch;
+}
+
+.section-label {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  padding: 18px;
+  border: 2px solid var(--line);
+  background: var(--ink);
+}
+
+.section-label span,
+.section-label h2 {
+  color: #fff;
+}
+
+.validation-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.validation-card {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
+  min-height: 258px;
+  padding: 16px;
+  border: 2px solid var(--line);
+  background: #fff;
+  box-shadow: 4px 4px 0 rgba(23, 23, 23, 0.16);
+}
+
+.validation-rank {
+  width: max-content;
+  padding: 2px 8px;
+  border: 2px solid var(--line);
+  background: var(--accent-3);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 900;
+}
+
+.validation-headline,
+.card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.validation-card h3 {
+  margin: 0 0 8px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 22px;
+  line-height: 1.12;
+}
+
+.validation-card p {
+  margin: 0;
+  color: #29241d;
+  line-height: 1.52;
+}
+
+.validation-steps {
+  display: grid;
+  gap: 8px;
+}
+
+.validation-steps div,
+.decision-strip div {
+  padding: 10px;
+  border: 1px solid rgba(23, 23, 23, 0.26);
+  background: #fffaf0;
+}
+
+.validation-steps b,
+.decision-strip b {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.risk-pill,
+.signal-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 8px;
+  border: 1px solid var(--line);
+  background: #fff;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.risk-low {
+  background: #dcebe5;
+}
+
+.risk-mid {
+  background: #ffe2a3;
+}
+
+.risk-high {
+  color: #fff;
+  background: var(--accent);
 }
 
 .radar-layout {
@@ -656,6 +865,16 @@ select:focus {
   text-transform: uppercase;
 }
 
+.decision-strip {
+  display: grid;
+  gap: 8px;
+}
+
+.decision-strip p {
+  margin: 0;
+  line-height: 1.48;
+}
+
 .score-bars {
   display: grid;
   gap: 8px;
@@ -720,6 +939,9 @@ select:focus {
   .control-band,
   .radar-layout,
   .metrics,
+  .focus-system,
+  .validation-deck,
+  .validation-cards,
   .signal-board,
   .thesis-band,
   .playbook-strip,
@@ -771,6 +993,15 @@ select:focus {
 
   .date-stamp {
     width: 92px;
+  }
+
+  .focus-chips {
+    grid-template-columns: 1fr;
+  }
+
+  .focus-copy h2,
+  .section-label h2 {
+    font-size: 28px;
   }
 
   .meta-grid {
