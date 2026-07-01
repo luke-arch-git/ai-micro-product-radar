@@ -13,6 +13,27 @@ const scoreLabels = {
 
 let activeSegment = "all";
 
+const funnelStages = [
+  {
+    id: "sell-now",
+    label: "今天可试卖",
+    cue: "有明确输入输出，风险可控，可以先用人工交付测试。",
+    className: "stage-sell"
+  },
+  {
+    id: "need-evidence",
+    label: "先补证据",
+    cue: "分数不低，但还缺真实询问、评论或愿意发素材的人。",
+    className: "stage-evidence"
+  },
+  {
+    id: "hold",
+    label: "暂缓避坑",
+    cue: "风险、边界或交付承诺不清楚，先不要当服务卖。",
+    className: "stage-hold"
+  }
+];
+
 const focusSegments = [
   {
     id: "all",
@@ -77,6 +98,7 @@ const elements = {
   debtMetric: document.querySelector("#debtMetric"),
   debtText: document.querySelector("#debtText"),
   validationDeck: document.querySelector("#validationDeck"),
+  marketFunnel: document.querySelector("#marketFunnel"),
   briefOutput: document.querySelector("#briefOutput"),
   briefTitle: document.querySelector("#briefTitle"),
   briefText: document.querySelector("#briefText"),
@@ -251,6 +273,66 @@ function validationPlan(item) {
     firstMove: sampleByKind[kind] || sampleByKind["文本"],
     pass: "24 小时内有 3 人愿意发素材，或 1 人愿意为样例继续付费。",
     boundary: riskProfile(item).boundary
+  };
+}
+
+function materialAsk(item) {
+  const kind = inputKind(`${item.input} ${item.output}`);
+  const asks = {
+    评论: "让对方发 50-100 条评论文本或打码截图。",
+    图片: "让对方发 3 张真实图片，并说明想要的结果。",
+    语音: "让对方发 1 段 3-10 分钟转写文本。",
+    表格: "让对方发 1 个表格或接龙截图，先做 10 行样例。",
+    文档: "让对方发 1 份文档、目录或资料包截图。",
+    聊天: "让对方发 1 段打码聊天记录。",
+    文本: "让对方发 1 段真实文本或当前手工版本。"
+  };
+
+  return asks[kind] || asks["文本"];
+}
+
+function testPrice(item) {
+  const risk = riskProfile(item);
+  const payment = item.scores.payment;
+  const speed = item.scores.mvp_speed;
+
+  if (risk.level === "高") return "暂不报价";
+  if (payment >= 5 && item.landing_score >= 86) return "首单 99-199 元";
+  if (payment >= 4 && speed >= 4) return "首单 39-99 元";
+  return "首单 19-49 元";
+}
+
+function funnelFit(item) {
+  const risk = riskProfile(item);
+  const stats = signalStats(item);
+  const backed = stats.count > 0;
+  const executionReady = item.scores.mvp_speed >= 4 && item.scores.payment >= 4;
+  const lowBoundaryRisk = risk.level !== "高";
+
+  if (!lowBoundaryRisk) {
+    return {
+      stage: "hold",
+      reason: "涉及高风险结论或结果承诺，先改成资料整理/清单服务。"
+    };
+  }
+
+  if ((backed || item.landing_score >= 86) && executionReady) {
+    return {
+      stage: "sell-now",
+      reason: backed ? `${stats.count} 条信号支撑，适合先人工交付。` : "高分但缺信号，可用小样例快速试探。"
+    };
+  }
+
+  if (item.landing_score >= 72 || executionReady) {
+    return {
+      stage: "need-evidence",
+      reason: backed ? "已有弱信号，还需要确认是否愿意发素材或付费。" : "先找真实评论、群聊或私信，别急着做工具。"
+    };
+  }
+
+  return {
+    stage: "hold",
+    reason: "输入、输出、付费或分发还不够清楚。"
   };
 }
 
@@ -503,6 +585,56 @@ function renderValidationDeck(items) {
     : `<div class="empty slim">当前筛选下没有可验证机会</div>`;
 }
 
+function renderMarketFunnel(items) {
+  const grouped = Object.fromEntries(funnelStages.map((stage) => [stage.id, []]));
+
+  for (const item of items) {
+    const fit = funnelFit(item);
+    grouped[fit.stage].push({ item, fit });
+  }
+
+  for (const stage of funnelStages) {
+    grouped[stage.id].sort((a, b) => priorityScore(b.item) - priorityScore(a.item));
+  }
+
+  elements.marketFunnel.innerHTML = funnelStages
+    .map((stage) => {
+      const rows = grouped[stage.id].slice(0, 4);
+      return `
+        <article class="funnel-column ${stage.className}">
+          <div class="funnel-head">
+            <span>${escapeHtml(stage.label)}</span>
+            <strong>${grouped[stage.id].length}</strong>
+          </div>
+          <p class="funnel-cue">${escapeHtml(stage.cue)}</p>
+          <div class="funnel-list">
+            ${
+              rows.length
+                ? rows
+                    .map(({ item, fit }) => {
+                      const plan = validationPlan(item);
+                      return `
+                        <div class="funnel-item">
+                          <b>${escapeHtml(item.title)}</b>
+                          <p>${escapeHtml(fit.reason)}</p>
+                          <dl>
+                            <div><dt>试探价</dt><dd>${escapeHtml(testPrice(item))}</dd></div>
+                            <div><dt>素材</dt><dd>${escapeHtml(materialAsk(item))}</dd></div>
+                            <div><dt>动作</dt><dd>${escapeHtml(plan.firstMove)}</dd></div>
+                          </dl>
+                        </div>
+                      `;
+                    })
+                    .join("")
+                : `<div class="empty slim">当前没有机会进入这一列</div>`
+            }
+          </div>
+        </article>
+      `;
+    })
+    .join("");
+}
+
 function renderSignalBoard(items) {
   const filteredIds = new Set(items.map((item) => item.id));
   const activeSignals = signals
@@ -638,6 +770,7 @@ function render() {
   summarize(items);
   renderEvidenceBoard(items);
   renderValidationDeck(items);
+  renderMarketFunnel(items);
   renderLanes(items);
   renderSignalBoard(items);
   renderCards(items);

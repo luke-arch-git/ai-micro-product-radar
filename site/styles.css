@@ -394,6 +394,149 @@ button:focus-visible {
   line-height: 1.52;
 }
 
+.market-funnel {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.funnel-label {
+  background:
+    linear-gradient(135deg, rgba(240, 180, 41, 0.2), transparent 54%),
+    var(--accent-2);
+}
+
+.funnel-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.funnel-column {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 12px;
+  min-height: 340px;
+  padding: 14px;
+  border: 2px solid var(--line);
+  background: #fff;
+}
+
+.funnel-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.funnel-head span {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 1.05;
+}
+
+.funnel-head strong {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  aspect-ratio: 1;
+  border: 2px solid var(--line);
+  border-radius: 50%;
+  background: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 24px;
+}
+
+.funnel-cue {
+  min-height: 54px;
+  margin: 0;
+  color: #29241d;
+  line-height: 1.5;
+}
+
+.funnel-list {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.funnel-item {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid rgba(23, 23, 23, 0.28);
+  background: #fffaf0;
+}
+
+.funnel-item b {
+  line-height: 1.25;
+}
+
+.funnel-item p {
+  margin: 0;
+  color: #342f28;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.funnel-item dl {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.funnel-item dl div {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 8px;
+  align-items: start;
+}
+
+.funnel-item dt,
+.funnel-item dd {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.funnel-item dt {
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.stage-sell {
+  background:
+    linear-gradient(180deg, rgba(44, 122, 107, 0.16), transparent 140px),
+    #fff;
+}
+
+.stage-sell .funnel-head strong {
+  background: #dcebe5;
+}
+
+.stage-evidence {
+  background:
+    linear-gradient(180deg, rgba(240, 180, 41, 0.18), transparent 140px),
+    #fff;
+}
+
+.stage-evidence .funnel-head strong {
+  background: var(--accent-3);
+}
+
+.stage-hold {
+  background:
+    linear-gradient(180deg, rgba(216, 74, 43, 0.12), transparent 140px),
+    #fff;
+}
+
+.stage-hold .funnel-head strong {
+  color: #fff;
+  background: var(--accent);
+}
+
 .validation-steps {
   display: grid;
   gap: 8px;
@@ -1068,6 +1211,8 @@ button:focus-visible {
   .evidence-board,
   .validation-deck,
   .validation-cards,
+  .market-funnel,
+  .funnel-columns,
   .brief-output,
   .signal-board,
   .thesis-band,
@@ -1160,6 +1305,7 @@ button:focus-visible {
   .github-card-head,
   .validation-actions,
   .listing-line,
+  .funnel-item dl div,
   .translation-stack {
     grid-template-columns: 1fr;
   }
